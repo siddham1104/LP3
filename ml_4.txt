@@ -1,0 +1,89 @@
+import numpy as np
+import pandas as pd
+import sympy as sym
+import matplotlib.pyplot as plt
+
+
+def objective(x):
+    return (x+3)**2
+
+def derivative(x):
+    return 2*(x+3)
+
+def gradient(alpha,start,max_iter):
+    x_list=list()
+    x=start
+    x_list.append(x)
+    for i in range(max_iter):
+        gradi=derivative(x)
+        x=x-(alpha*gradi)
+        x_list.append(x)
+    return x_list
+x=sym.symbols('x')
+expr=(x+3)**2.0
+grad=sym.Derivative(expr,x)
+print("{}".format(grad.doit()))
+grad.doit().subs(x,2)
+
+
+alpha=0.1
+start=2
+max_iter=30
+x=sym.symbols('x')
+expr=(x+3)**2
+
+x_cor=np.linspace(-15,15,100)
+pyplot.plot(x_cor,objective(x_cor))
+pyplot.plot(2,objective(2),'ro')
+
+x=gradient(alpha,start,max_iter)
+x_cor=np.linspace(-5,5,100)
+pyplot.plot(x_cor,objective(x_cor))
+
+x_arr=np.array(x)
+pyplot.plot(x_arr,objective(x_arr),'.-',color='red')
+pyplot.show()
+
+#explaination:
+
+# Defining the Objective Function:
+
+# The objective function is defined as (x+3)^2. This is a simple quadratic function.
+# Defining the Derivative Function:
+
+# The derivative function calculates the derivative of the objective function, which is 2*(x+3) in this case.
+# Implementing Gradient Descent:
+
+# The gradient function is the core of the gradient descent algorithm.
+# It takes three arguments: alpha (learning rate), start (initial guess for the minimum), 
+# and max_iter (the maximum number of iterations).
+# It initializes an empty list x_list to store the values of x at each iteration.
+# It enters a loop for a maximum of max_iter iterations.
+# Inside the loop, it calculates the gradient (derivative) of the objective function at the current x value.
+# It updates the value of x using the gradient and the learning rate: x = x - (alpha * gradient).
+# It appends the new x value to the x_list.
+# The function returns a list of x values at each iteration.
+# Symbolic Differentiation:
+
+# The code uses sympy to symbolically differentiate the objective function, and it prints the derivative 
+# expression using grad.doit(). 
+
+# Initializing Gradient Descent Parameters:
+
+# The learning rate (alpha) is set to 0.1.
+# The initial guess (start) for the minimum is set to 2.
+# The maximum number of iterations (max_iter) is set to 30.
+# Plotting the Objective Function:
+
+# The code generates a range of x values using np.linspace, creates a plot of the objective function using 
+# pyplot.plot, and marks the initial guess with a red dot.
+# Running Gradient Descent:
+
+# The gradient function is called with the specified parameters, and the resulting list of x values at 
+# each iteration is stored in x.
+# Plotting Gradient Descent Progress:
+
+# The code creates a new range of x values and plots the objective function.
+# It also plots the trajectory of the gradient descent by connecting the points using red lines.
+# This allows you to visualize how the algorithm approaches the minimum of the objective
+

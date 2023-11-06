@@ -1,0 +1,56 @@
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import MinMaxScaler
+import tensorflow as tf
+from tensorflow import keras
+from sklearn.metrics import accuracy_score, classification_report
+
+df = pd.read_csv('bank.csv')
+
+df.head()
+
+df = df.drop(['RowNumber', 'CustomerId', 'Surname'], axis=1)
+
+df.info()
+
+df = pd.get_dummies(df, ['Gender', 'Geography'])
+
+cols_to_scale = ['CreditScore', 'Balance', 'EstimatedSalary']
+scaler = MinMaxScaler()
+df[cols_to_scale] = sclaer.fit_transform(df[cols_to_scale])
+
+X = df.drop(['Exited'], 1)
+y = df['Exited']
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.2, random_state = 42)
+
+# MOdel:
+
+model = keras.Sequential([
+    keras.layers.Dense(13, input_shape=(13,), activation = 'relu'),
+    keras.layers.Dense(1, activation = 'sigmoid'),
+])
+
+model.summary()
+
+opt = keras.optimizers.Adam(learning_rate = 0.01)
+
+model.compile(optimizer=opt, loss = binary_crossentropy, metrics=['accuracy'])
+
+model.fit(X_train, y_train, batch_size = 64, epochs=50, verbose=1)
+
+model.evaluate(X_test, y_test)
+
+y_pred = model.predict(X_test)
+
+for i in range(len(y_pred)):
+    if y_pred[i] >= 0.5:
+        y_pred[i] = 1
+    else:
+        y_pred[i] = 0
+
+model = accuracy_score (y_test, y_pred) 
+print("Model 1 accuracy: ", model)
