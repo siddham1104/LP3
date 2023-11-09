@@ -1,0 +1,47 @@
+# Time Complexity:
+# The time complexity of this code is exponential, specifically O(2^n). This is because the recursive 
+# function makes two recursive calls for each value of n, once for n-1 and once for n-2. As a result, 
+# the number of recursive function calls grows exponentially with n. 
+
+# space Complexity:
+# O(n)
+
+# recursive
+def rec_func(n):
+    if n<=1:
+        return n
+    else:
+        return(rec_func(n-1)+rec_func(n-2))
+        
+m = int(input("enter number : "))
+print("fibonacci sequence(recursive) : ")
+for i in range(m):
+    print(rec_func(i))
+
+
+
+# Time Complexity:
+# The time complexity of this code is O(n), where n is the input number representing the index 
+# of the Fibonacci sequence you want to generate. This is because the code iterates through a 
+# loop from 0 to n, 
+
+# space Complexity:
+# O(1)
+
+# non recursive
+n = int(input("enter number :"))
+n1 = 0
+n2 = 1
+
+print("fibonacci sequence(non-recursive) : ")
+for i in range (n):
+    if(i==0):
+        print("0 ")
+    elif(i==1):
+        print("1 ")
+    else:
+        ans = n1+n2
+        print(ans)
+        n1 = n2
+        n2 = ans
+        
