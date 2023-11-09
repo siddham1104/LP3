@@ -1,0 +1,31 @@
+# fractional knapsack problem
+# Time complexity 
+# Overall, the time complexity of the code is dominated by the sorting step, 
+# which is O(n log n) due to the use of the sort method
+
+# Space complexity
+# it can be considered as low as  O(1)
+
+class item:
+    def __init__(self, value, weight):
+        self.value = value
+        self.weight = weight
+        
+def knapsack(W, arr):
+    arr.sort(key = lambda x:(x.value/x.weight), reverse = True)
+    finalVal = 0
+    for item in arr:
+        if item.weight < W:
+            W -= item.weight
+            finalVal += item.value
+        else:
+            finalVal += item.value * (W)/item.weight
+            break
+        
+    return finalVal
+    
+if __name__ == "__main__":
+    arr = [item(60, 10), item(100, 20), item(120, 30)]
+    W= 50
+    finalAns = knapsack(W, arr)
+    print(finalAns)
